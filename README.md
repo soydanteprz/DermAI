@@ -41,11 +41,9 @@ Cerca del **58% de las muestras son biopsiadas** y confirmadas por expertos derm
 
 ## ⚙️ Preprocesamiento de Datos
 
-Dado que las imágenes **no estaban organizadas en carpetas por tipo de cáncer**, se desarrolló un script en Python para clasificar automáticamente las imágenes con base en su `lesion_id` y el diagnóstico asociado.
+Dado que las imágenes **no estaban organizadas en carpetas por tipo de cáncer**, se desarrolló el script `utils.py` para **reorganizar las imágenes** en carpetas según su diagnóstico.
 
-### 🛠️ Funcionamiento del Script
-
-1. Se lee el archivo `.csv` para construir un **diccionario** con pares `lesion_id: diagnóstico`.
+1. Se lee el archivo `metadata.csv` para construir un **diccionario** con pares `lesion_id: diagnóstico`.
 2. Se procesan todas las imágenes, extrayendo el `lesion_id` a partir del nombre de archivo, cuyo formato es:
     ```
     PAT_[patient_id]_[lesion_id]_[img_id].png
