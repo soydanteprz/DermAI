@@ -68,12 +68,55 @@ Una vez reorganizadas las imágenes, se realiza la división del dataset en conj
 
 Cada carpeta (`train`, `validation`, `test`) contiene subcarpetas por tipo de diagnóstico.
 
----
+La carpeta data contiene la siguiente estructura:
 
+```
+data/
+├── metadata.csv
+├── split_report.txt
+├── full_images
+├── organized_images
+├── train/
+│   ├── ACK/
+│   ├── BCC/
+│   ├── MEL/
+│   ├── NEV/
+│   ├── SEK/
+│   └── SCC/
+├── validation/
+│   ├── ACK/
+│   ├── BCC/
+│   ├── MEL/
+│   ├── NEV/
+│   ├── SEK/
+│   └── SCC/
+└── test/
+    ├── ACK/
+    ├── BCC/
+    ├── MEL/
+    ├── NEV/
+    ├── SEK/
+    └── SCC/
+```
+### 📊 Reporte de División
+El archivo `split_report.txt` contiene un resumen de la división del dataset, mostrando el número de imágenes por tipo de diagnóstico en cada conjunto (train, validation, test).
+La carpeta `full_images` contiene todas las imágenes originales sin clasificar, mientras que `organized_images` contiene las imágenes reorganizadas por diagnóstico.
+Despues las imágenes se dividen en conjuntos de entrenamiento, validación y prueba, asegurando que cada conjunto tenga una representación equitativa de cada tipo de diagnóstico.
+
+> ⚠️ **Nota importante**  
+En el GitHub solamente se puede encontrar dentro de la carpeta `data` el archivo `metadata.csv`, el archivo `split_report.txt` por razones de espacio, pero en el siguiente link a Drive se wncuentra el resto de los archivos:
+[Google Drive](https://drive.google.com/drive/folders/1nR3f4mr7ylwR_OyzVkAkjps9zQubiuI6?usp=sharing)
+> 
 ## ✅ Estado Actual
 
 - ✅ Dataset descargado y explorado
 - ✅ Script para organización por diagnóstico implementado
 - ✅ División en conjuntos de datos completada
+
+---
+
+## 👤 Autor
+
+- **Dante David Pérez Pérez A01709226** 
 
 
