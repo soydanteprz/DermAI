@@ -106,17 +106,55 @@ Despues las imágenes se dividen en conjuntos de entrenamiento, validación y pr
 > ⚠️ **Nota importante**  
 En el GitHub solamente se puede encontrar dentro de la carpeta `data` el archivo `metadata.csv`, el archivo `split_report.txt` por razones de espacio, pero en el siguiente link a Drive se wncuentra el resto de los archivos:
 [Google Drive](https://drive.google.com/drive/folders/1nR3f4mr7ylwR_OyzVkAkjps9zQubiuI6?usp=sharing)
-> 
+>
+
+## 🧠 Data Augmentation y Entrenamiento del Modelo
+
+### 📈 Aumento de Datos
+
+Para mejorar el rendimiento del modelo de clasificación, se aplicaron técnicas de **data augmentation** utilizando el notebook [`data_augmentation.ipynb`](./data_augmentation.ipynb).  
+En este script:
+
+- Se genera un **diccionario anidado** que contiene la información actual de cada carpeta (una por diagnóstico) y la **cantidad de imágenes** disponibles.
+- Se evalúa el **balance del dataset** para determinar qué clases necesitan mayor augmentación.
+- Se aplican transformaciones como rotaciones, zoom, flips horizontales y verticales, entre otras, para aumentar la diversidad del conjunto de datos de entrenamiento sin necesidad de recolectar más imágenes.
+
+---
+
+### 🧪 Modelo de Clasificación CNN
+
+El modelo se define y entrena en el notebook [`cnn_dermai.ipynb`](./cnn_dermai.ipynb), inspirado en el artículo científico:
+
+> 📄 *Skin cancer classification using convolutional neural networks*  
+> [IOP Science, 2020](https://iopscience.iop.org/article/10.1088/1757-899X/982/1/012005/pdf)
+
+En este notebook:
+
+- Se construye una arquitectura **CNN personalizada** basada en la propuesta del paper.
+- Se entrena el modelo con el dataset de imágenes dermatológicas reorganizado.
+- Se utilizan técnicas como:
+  - Normalización de imágenes.
+  - Callbacks como `ModelCheckpoint` y `EarlyStopping`.
+- Al finalizar el entrenamiento, se guarda el modelo entrenado en el archivo `modelo_dermai.h5`, para su uso posterior en inferencia o despliegue.
+
 ## ✅ Estado Actual
 
 - ✅ Dataset descargado y explorado
 - ✅ Script para organización por diagnóstico implementado
 - ✅ División en conjuntos de datos completada
+- ✅ Data augmentation aplicado
+- ✅ Modelo CNN definido y entrenado (No es el definitivo, se puede mejorar)
+- ✅ Modelo guardado en formato `.h5`
 
 ---
 
 ## 👤 Autor
 
-- **Dante David Pérez Pérez A01709226** 
+- **Dante David Pérez Pérez A01709226**
+
+Uso de Data augmentation para mejorar el rendimiento del modelo de clasificación de imágenes, el script data_augmentation.ipynb creamos un diccionario de diccionario donde tiene la informacion actual de cada carpeta y la cantidad de imagenes que tiene.
+
+Despues en cnn_dermai.ipynb se crea el modelo basado en el papel Skin cancer classification https://iopscience.iop.org/article/10.1088/1757-899X/982/1/012005/pdf
+y se entrena con el dataset de imagenes de cancer de piel, al final se guarda el modelo en un archivo .h5 para su uso posterior.
 
 
