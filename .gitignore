@@ -3,3 +3,6 @@
 /data/test/
 /data/train/
 /data/validation/
+/data/balanced_train/
+/resize_comparison/
+/data/balanced_train/

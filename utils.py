@@ -445,7 +445,7 @@ def create_train_val_test_split(source_dir, train_dir, val_dir, test_dir,
                           train_ratio, val_ratio, test_ratio, random_seed)
 
     # Create split report
-    report = create_split_report(stats, os.path.dirname(train_dir), train_ratio, val_ratio, test_ratio)
+    report = crea3te_split_report(stats, os.path.dirname(train_dir), train_ratio, val_ratio, test_ratio)
 
     print(report)
 
@@ -462,7 +462,7 @@ def main():
     test_dir = 'data/test'
 
     # Step 1: Organize the dataset by diagnosis
-    lesion_to_diagnostic, diagnosis_to_dirname = organize_dataset(csv_file, image_dir, organized_dir)
+    organize_dataset(csv_file, image_dir, organized_dir)
 
     # Step 2: Create train/val/test splits
     create_train_val_test_split(organized_dir, train_dir, val_dir, test_dir)

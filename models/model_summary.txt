@@ -1,0 +1,24 @@
+SKIN LESION CLASSIFICATION MODEL SUMMARY
+==================================================
+
+Model Type: Convolutional Neural Network (CNN)
+Input Shape: (150, 150, 3)
+Number of Classes: 6
+Total Parameters: 148,006
+Training Epochs: 26
+Best Validation Accuracy: 0.5677
+Final Test Accuracy: 0.4430
+
+Classes:
+- ACK: Actinic Keratosis
+- BCC: Basal Cell Carcinoma
+- MEL: Melanoma
+- NEV: Nevus
+- SEK: Seborrheic Keratosis
+- SCC: Squamous Cell Carcinoma
+
+Files Saved:
+- Complete Model: models/complete_model.keras
+- Model Weights: models/model.weights.h5
+- Model Architecture: models/model_architecture.json
+- Training History: models/training_history.csv

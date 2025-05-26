@@ -1,0 +1,19 @@
+SKIN LESION CLASSIFICATION REPORT
+==================================================
+
+Test Accuracy: 0.4430 (44.30%)
+Test Loss: 1.3904
+
+DETAILED CLASSIFICATION REPORT:
+              precision    recall  f1-score   support
+
+         ACK     0.4528    0.6575    0.5363       146
+         BCC     0.5509    0.5476    0.5493       168
+         MEL     0.2500    0.0769    0.1176        13
+         NEV     0.3250    0.2500    0.2826        52
+         SCC     0.0938    0.0769    0.0845        39
+         SEK     0.1000    0.0213    0.0351        47
+
+    accuracy                         0.4430       465
+   macro avg     0.2954    0.2717    0.2676       465
+weighted avg     0.4025    0.4430    0.4124       465
