@@ -5,9 +5,9 @@ Model Type: Convolutional Neural Network (CNN)
 Input Shape: (150, 150, 3)
 Number of Classes: 6
 Total Parameters: 148,006
-Training Epochs: 19
-Best Validation Accuracy: 0.4643
-Final Test Accuracy: 0.4387
+Training Epochs: 60
+Best Validation Accuracy: 0.5089
+Final Test Accuracy: 0.4516
 
 Classes:
 - ACK: Actinic Keratosis
