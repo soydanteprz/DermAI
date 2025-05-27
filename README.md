@@ -158,3 +158,76 @@ Despues en cnn_dermai.ipynb se crea el modelo basado en el papel Skin cancer cla
 y se entrena con el dataset de imagenes de cancer de piel, al final se guarda el modelo en un archivo .h5 para su uso posterior.
 
 
+
+
+def create_model():
+"""Create CNN model based on research paper architecture with Mac M3 Pro GPU optimization"""
+
+    print("CREATING CNN MODEL")
+    print("-" * 40)
+
+    strategy = tf.distribute.get_strategy()
+
+    with strategy.scope():
+        model = models.Sequential([
+            # Input layer - adjusted to 150x150 instead of 128x128 to match your dataset
+            layers.Input(shape=(128, 128, 3), name='input_layer'),
+
+            layers.Conv2D(16, (3, 3), padding='same', name='conv1'),
+            layers.BatchNormalization(name='batchnorm1'),
+            layers.ReLU(name='relu1'),
+            layers.MaxPooling2D((2, 2), name='maxpool1'),
+            layers.Dropout(0.2, name='dropout1'),
+
+            # Second Convolution Block
+            layers.Conv2D(32, (3, 3), padding='same', name='conv2'),
+            layers.BatchNormalization(name='batchnorm2'),
+            layers.ReLU(name='relu2'),
+            layers.MaxPooling2D((2, 2), name='maxpool2'),
+            layers.Dropout(0.2, name='dropout2'),
+
+            # Third Convolution Block
+            layers.Conv2D(64, (3, 3), padding='same', name='conv3'),
+            layers.BatchNormalization(name='batchnorm3'),
+            layers.ReLU(name='relu3'),
+            layers.MaxPooling2D((2, 2), name='maxpool3'),
+            layers.Dropout(0.3, name='dropout3'),
+
+            # Bloque Convolucional 3 (nuevo)
+            layers.Conv2D(128, (3, 3), padding='same'),
+            layers.BatchNormalization(),
+            layers.ReLU(),
+            layers.MaxPooling2D((2, 2)),
+            layers.Dropout(0.4),
+
+            layers.Flatten(),
+            layers.Dense(128, activation='relu'),  # Capa densa intermedia
+            layers.Dropout(0.5),
+            layers.Dense(6, activation='softmax')
+        ])
+
+        # Optimized learning rate for GPU training (matching paper style)
+        initial_lr = 0.001
+
+        # Compile model - using paper-style optimizer
+        model.compile(
+            loss='categorical_crossentropy',
+            optimizer=optimizers.Adam(learning_rate=initial_lr),
+            metrics=['accuracy']
+        )
+
+    print(f"📊 Total parameters: {model.count_params():,}")
+    print(f"🎯 Optimized for: {'Mac M3 Pro GPU' if gpu_available else 'CPU'}")
+    print(f"📈 Initial learning rate: {initial_lr}")
+
+    # Display model summary
+    model.summary()
+    print()
+
+    return model
+
+
+Epoch 60/60
+1/93 ━━━━━━━━━━━━━━━━━━━━ 5s 65ms/step - accuracy: 0.2500 - loss: 6.2239
+Epoch 60: val_accuracy did not improve from 0.31250
+93/93 ━━━━━━━━━━━━━━━━━━━━ 4s 47ms/step - accuracy: 0.2500 - loss: 6.2239 - val_accuracy: 0.2232 - val_loss: 6.0415 - learning_rate: 1.0000e-08

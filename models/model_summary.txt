@@ -4,10 +4,10 @@ SKIN LESION CLASSIFICATION MODEL SUMMARY
 Model Type: Convolutional Neural Network (CNN)
 Input Shape: (150, 150, 3)
 Number of Classes: 6
-Total Parameters: 148,006
-Training Epochs: 60
-Best Validation Accuracy: 0.5089
-Final Test Accuracy: 0.4516
+Total Parameters: 2,621,126
+Training Epochs: 20
+Best Validation Accuracy: 0.5134
+Final Test Accuracy: 0.5032
 
 Classes:
 - ACK: Actinic Keratosis
