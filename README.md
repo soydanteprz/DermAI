@@ -124,7 +124,7 @@ En este script:
 ### 🧪 Modelo de Clasificación CNN
 
 El modelo se define y entrena en el notebook [`cnn_dermai.ipynb`](./cnn_dermai.ipynb), inspirado en el artículo científico:
-
+Tras investigar múltiples papers y probar diversas arquitecturas, se identificaron dos modelos que mostraron los mejores resultados con nuestro dataset.
 > 📄 *Skin cancer classification using convolutional neural networks*  
 > [IOP Science, 2020](https://iopscience.iop.org/article/10.1088/1757-899X/982/1/012005/pdf)
 
@@ -137,97 +137,77 @@ En este notebook:
   - Callbacks como `ModelCheckpoint` y `EarlyStopping`.
 - Al finalizar el entrenamiento, se guarda el modelo entrenado en el archivo `modelo_dermai.h5`, para su uso posterior en inferencia o despliegue.
 
-## ✅ Estado Actual
+# Arquitecturas Implementadas
+Utilice 6 papers para implementar 6 modelos diferentes adaptados a mis necesidades como las dimenciones de mis images, cantidad de images, etc.
+Estos dos modelos fueron lo que mejor funcionaron pero hubo un problema porque al anadir mas images a las clases MEL, NEV Y SEK el accurracy disminuyo.
+### 1. Modelo basado en MobileNetV2
+Basado en este paper
+[CNN Comparative Analysis for Skin Cancer Classification](https://ieeexplore.ieee.org/document/9984324)
+   2. Precisión obtenida:
+      📊 Entrenamiento: 62.50% | ✅ Validación: 43.55%
 
-- ✅ Dataset descargado y explorado
-- ✅ Script para organización por diagnóstico implementado
-- ✅ División en conjuntos de datos completada
-- ✅ Data augmentation aplicado
-- ✅ Modelo CNN definido y entrenado (No es el definitivo, se puede mejorar)
-- ✅ Modelo guardado en formato `.h5`
+| Layer (Type)                         | Output Shape       | Parameters   |
+|-------------------------------------|--------------------|--------------|
+| mobilenetv2_1.00_96 (Functional)    | (None, 3, 3, 1280) | 2,257,984    |
+| global_average_pooling2d           | (None, 1280)       | 0            |
+| dropout_15 (Dropout)               | (None, 1280)       | 0            |
+| dense_8 (Dense)                    | (None, 128)        | 163,968      |
+| batch_normalization (BatchNorm)   | (None, 128)        | 512          |
+| dropout_16 (Dropout)               | (None, 128)        | 0            |
+| dense_9 (Dense)                    | (None, 6)          | 774          |
+
+**Total Parameters:** 2,423,238
+
+## Características clave:
+
+- MobileNetV2 preentrenada como extractor de características
+- Dropout (50%) para reducir sobreajuste
+- Batch Normalization para estabilizar el entrenamiento
+- Capa densa final con 6 neuronas (una por clase)
+
+Here are some example images used in the project:
+
+![Example 1](images/confusion_matrix.png)
+![Example 2](images/training_history.png)
+
+- 
+### 2. Modelo CNN Personalizado
+
+## 🧠 CNN Model Architecture
+Basado en este paper [Skin lesion classification of dermoscopic images using machine learning and convolutional neural network](https://www.nature.com/articles/s41598-022-22644-9)
+
+| Layer (Type)                      | Output Shape        | Parameters     |
+|----------------------------------|---------------------|----------------|
+| conv2d_31 (Conv2D)               | (None, 96, 96, 32)  | 896            |
+| batch_normalization              | (None, 96, 96, 32)  | 128            |
+| max_pooling2d                    | (None, 32, 32, 32)  | 0              |
+| dropout                          | (None, 32, 32, 32)  | 0              |
+| conv2d_32 (Conv2D)               | (None, 32, 32, 64)  | 18,496         |
+| conv2d_33 (Conv2D)               | (None, 32, 32, 64)  | 36,928         |
+| batch_normalization              | (None, 32, 32, 64)  | 256            |
+| max_pooling2d                    | (None, 16, 16, 64)  | 0              |
+| dropout                          | (None, 16, 16, 64)  | 0              |
+| conv2d_34 (Conv2D)               | (None, 16, 16, 128) | 73,856         |
+| batch_normalization              | (None, 16, 16, 128) | 512            |
+| conv2d_35 (Conv2D)               | (None, 16, 16, 128) | 147,584        |
+| batch_normalization              | (None, 16, 16, 128) | 512            |
+| max_pooling2d                    | (None, 8, 8, 128)   | 0              |
+| dropout                          | (None, 8, 8, 128)   | 0              |
+| flatten                          | (None, 8192)        | 0              |
+| dense_13 (Dense)                 | (None, 1024)        | 8,389,632      |
+| batch_normalization              | (None, 1024)        | 4,096          |
+| dropout                          | (None, 1024)        | 0              |
+| dense_14 (Dense)                 | (None, 6)           | 6,150          |
+
+**🔢 Total Parameters:** 8,679,046 (33.11 MB)  
+**🧠 Trainable Parameters:** 8,676,294 (33.10 MB)  
+**🧊 Non-trainable Parameters:** 2,752 (10.75 KB)
+![Example 1](images/paper6mc.png)
+![Example 2](images/paper6h.png)
+
 
 ---
 
 ## 👤 Autor
 
 - **Dante David Pérez Pérez A01709226**
-
-Uso de Data augmentation para mejorar el rendimiento del modelo de clasificación de imágenes, el script data_augmentation.ipynb creamos un diccionario de diccionario donde tiene la informacion actual de cada carpeta y la cantidad de imagenes que tiene.
-
-Despues en cnn_dermai.ipynb se crea el modelo basado en el papel Skin cancer classification https://iopscience.iop.org/article/10.1088/1757-899X/982/1/012005/pdf
-y se entrena con el dataset de imagenes de cancer de piel, al final se guarda el modelo en un archivo .h5 para su uso posterior.
-
-
-
-
-def create_model():
-"""Create CNN model based on research paper architecture with Mac M3 Pro GPU optimization"""
-
-    print("CREATING CNN MODEL")
-    print("-" * 40)
-
-    strategy = tf.distribute.get_strategy()
-
-    with strategy.scope():
-        model = models.Sequential([
-            # Input layer - adjusted to 150x150 instead of 128x128 to match your dataset
-            layers.Input(shape=(128, 128, 3), name='input_layer'),
-
-            layers.Conv2D(16, (3, 3), padding='same', name='conv1'),
-            layers.BatchNormalization(name='batchnorm1'),
-            layers.ReLU(name='relu1'),
-            layers.MaxPooling2D((2, 2), name='maxpool1'),
-            layers.Dropout(0.2, name='dropout1'),
-
-            # Second Convolution Block
-            layers.Conv2D(32, (3, 3), padding='same', name='conv2'),
-            layers.BatchNormalization(name='batchnorm2'),
-            layers.ReLU(name='relu2'),
-            layers.MaxPooling2D((2, 2), name='maxpool2'),
-            layers.Dropout(0.2, name='dropout2'),
-
-            # Third Convolution Block
-            layers.Conv2D(64, (3, 3), padding='same', name='conv3'),
-            layers.BatchNormalization(name='batchnorm3'),
-            layers.ReLU(name='relu3'),
-            layers.MaxPooling2D((2, 2), name='maxpool3'),
-            layers.Dropout(0.3, name='dropout3'),
-
-            # Bloque Convolucional 3 (nuevo)
-            layers.Conv2D(128, (3, 3), padding='same'),
-            layers.BatchNormalization(),
-            layers.ReLU(),
-            layers.MaxPooling2D((2, 2)),
-            layers.Dropout(0.4),
-
-            layers.Flatten(),
-            layers.Dense(128, activation='relu'),  # Capa densa intermedia
-            layers.Dropout(0.5),
-            layers.Dense(6, activation='softmax')
-        ])
-
-        # Optimized learning rate for GPU training (matching paper style)
-        initial_lr = 0.001
-
-        # Compile model - using paper-style optimizer
-        model.compile(
-            loss='categorical_crossentropy',
-            optimizer=optimizers.Adam(learning_rate=initial_lr),
-            metrics=['accuracy']
-        )
-
-    print(f"📊 Total parameters: {model.count_params():,}")
-    print(f"🎯 Optimized for: {'Mac M3 Pro GPU' if gpu_available else 'CPU'}")
-    print(f"📈 Initial learning rate: {initial_lr}")
-
-    # Display model summary
-    model.summary()
-    print()
-
-    return model
-
-
-Epoch 60/60
-1/93 ━━━━━━━━━━━━━━━━━━━━ 5s 65ms/step - accuracy: 0.2500 - loss: 6.2239
-Epoch 60: val_accuracy did not improve from 0.31250
-93/93 ━━━━━━━━━━━━━━━━━━━━ 4s 47ms/step - accuracy: 0.2500 - loss: 6.2239 - val_accuracy: 0.2232 - val_loss: 6.0415 - learning_rate: 1.0000e-08
