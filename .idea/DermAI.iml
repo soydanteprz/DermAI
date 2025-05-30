@@ -10,6 +10,8 @@
       <excludeFolder url="file://$MODULE_DIR$/data/validation" />
       <excludeFolder url="file://$MODULE_DIR$/models" />
       <excludeFolder url="file://$MODULE_DIR$/resize_comparison" />
+      <excludeFolder url="file://$MODULE_DIR$/data/HAM10000_organized" />
+      <excludeFolder url="file://$MODULE_DIR$/data/HAM10000_split" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

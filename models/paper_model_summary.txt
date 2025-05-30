@@ -1,0 +1,24 @@
+SKIN LESION CLASSIFICATION - PAPER IMPLEMENTATION
+============================================================
+
+Based on: 'Skin lesion classification of dermoscopic images using
+machine learning and convolutional neural network'
+
+Model Type: Custom CNN (Paper Architecture)
+Input Shape: (96, 96, 3)
+Number of Classes: 6
+Total Parameters: 1,443,622
+Training Epochs: 100
+Best Validation Accuracy: 0.6004
+Final Test Accuracy: 0.6013
+
+PAPER COMPARISON:
+Paper Test Accuracy: 0.8643 (86.43%)
+Your Test Accuracy: 0.6013 (60.13%)
+Difference: -0.2630 (-26.30%)
+
+FILES SAVED:
+- Complete Model: models/paper_complete_model.keras
+- Model Weights: models/paper_model.weights.h5
+- Model Architecture: models/paper_model_architecture.json
+- Training History: models/paper_training_history.csv
