@@ -445,7 +445,7 @@ def create_train_val_test_split(source_dir, train_dir, val_dir, test_dir,
                           train_ratio, val_ratio, test_ratio, random_seed)
 
     # Create split report
-    report = crea3te_split_report(stats, os.path.dirname(train_dir), train_ratio, val_ratio, test_ratio)
+    report = create_split_report(stats, os.path.dirname(train_dir), train_ratio, val_ratio, test_ratio)
 
     print(report)
 
