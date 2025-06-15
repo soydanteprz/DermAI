@@ -43,3 +43,5 @@ Mas informacion en el Articulo: [Detección de Cáncer de Piel con Redes Neurona
 ## 👤 Autor
 
 - **Dante David Pérez Pérez A01709226**
+- [Dataset] (https://www.kaggle.com/datasets/danteprez/skincancer-dataset-ham1000-prime/data) 
+Descarga el dataset y crea una carpeta dentro `Data` llamada `HAM10000_split` ahi coloca las carpetas `train`, `validation` y `test`
